@@ -1,0 +1,90 @@
+version: "3.7"
+
+networks:
+  iotstack-net:
+    name: iotstack-net
+    driver: bridge
+
+services:
+
+  #######################################
+  # NodeRed
+  #######################################
+  node-red:
+    image: ${NODERED_IMAGE}
+    hostname: ${NODERED_HOSTNAME}
+    container_name: iotstack-nodered
+    networks:
+      - iotstack-net
+    environment:
+      - TZ=Europe/Amsterdam
+      - NODERED_PORT=1880
+      - NODERED_USER=${NODERED_USER}
+      - NODERED_PASSWORD=${NODERED_PASSWORD}
+      - NODERED_LOGLEVEL=${NODERED_LOGLEVEL}
+      - NODERED_PROJECTS=${NODERED_PROJECTS}
+      - NODERED_USERDIR=${NODERED_USERDIR}
+      - NODERED_METRICS=${NODERED_METRICS}
+      - NODERED_AUDIT=${NODERED_AUDIT}
+      - NODERED_PAGETITLE=${NODERED_PAGETITLE}
+      - NODERED_HEADERTITLE=${NODERED_HEADERTITLE}
+      - NODERED_CREDKEY=${NODERED_CREDKEY}
+      - OS4OS_DIR=${OS4OS_DIR}
+    restart: always
+    logging:
+      driver: syslog
+      options:
+        tag: "[os4os][iotstack][nodered]"
+    volumes:
+      - ./data/nodered:/data
+    ports:
+      - "${NODERED_PORT}:1880"
+
+  #######################################
+  # InfluxDB
+  #######################################
+  influxdb:
+    image: ${INFLUXDB_IMAGE}
+    hostname: ${INFLUXDB_HOSTNAME}
+    container_name: iotstack-influxdb
+    networks:
+      - iotstack-net
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=${INFLUXDB_MODE}
+      - DOCKER_INFLUXDB_INIT_USERNAME=${INFLUXDB_USERNAME}
+      - DOCKER_INFLUXDB_INIT_PASSWORD=${INFLUXDB_PASSWORD}
+      - DOCKER_INFLUXDB_INIT_ORG=${INFLUXDB_ORG}
+      - DOCKER_INFLUXDB_INIT_BUCKET=${INFLUXDB_BUCKET}
+      - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=${INFLUXDB_ADMIN_TOKEN}
+    restart: always
+    logging:
+      driver: syslog
+      options:
+        tag: "[os4os][iotstack][influx]"
+    ports:
+      - "${INFLUXDB_PORT}:8086"
+    volumes:
+      - ./data/influxdb:/var/lib/influxdb
+
+  #######################################
+  # Grafana
+  #######################################
+  grafana:
+    image: ${GRAFANA_IMAGE}
+    hostname: ${GRAFANA_HOSTNAME}
+    container_name: iotstack-grafana
+    networks:
+      - iotstack-net
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - GF_USERS_ALLOW_SIGN_UP=${GRAFANA_ALLOW_SIGN_UP}
+    restart: always
+    logging:
+      driver: syslog
+      options:
+        tag: "[os4os][iotstack][grafana]"
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    volumes:
+      - ./data/grafana:/var/lib/grafana

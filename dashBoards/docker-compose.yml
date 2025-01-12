@@ -1,0 +1,57 @@
+version: "3.3"
+
+networks:
+  dashboard-net:
+    name: dashboard-net
+    driver: bridge
+
+services:
+  parkli-dashboard:
+    hostname: dashboard
+    container_name: parkli-dashboard
+    image: parkli-dashboard/3:latest
+    privileged: false
+    restart: always
+    expose:
+    - "${DASHBOARD_PORT}"
+    volumes:
+    - ./host-volumes/app:/app
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DBNAME}
+      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    networks:
+    - dashboard-net
+
+  parkli-postgres:
+    hostname: parkli-postgres
+    container_name: ${POSTGRES_HOSTNAME}
+    image: ${POSTGRES_IMAGE}
+    restart: always
+    expose:
+    - "${POSTGRES_PORT}"
+    volumes:
+    - ./host-volumes/database:/var/lib/postgresql/data
+    - ./host-volumes/dbdump:/mnt
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DBNAME}
+    networks:
+    - dashboard-net
+
+ # parkli-dbupdate:
+ #   container_name: parkli-dbupdate
+ #   image: parkli-dbupdate
+ #   volumes:
+ #   - /home/fwadmin/parkli-dashboard/v2/parkli-dbupdate/host-volumes/update:/update
+ #   environment:
+ #     POSTGRES_PASSWORD: ${POSTGRES_PASS}
+ #     POSTGRES_USER: ${POSTGRES_USER}
+ #     POSTGRES_DB: ${POSTGRES_DBNAME}
+ #     POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+ #     POSTGRES_PORT: ${POSTGRES_PORT}
+ #   networks:
+ #   - dashboard-net

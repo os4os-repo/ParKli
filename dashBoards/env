@@ -1,0 +1,10 @@
+#PostgreSQL Datenbank
+POSTGRES_IMAGE=postgres:16-alpine   # Postgres Image auf DockerHub
+POSTGRES_PORT=5432                  # Port unter der die DB erreichbar ist
+POSTGRES_DBNAME=<DBNAME>            # Hostname der PostgresDB im Docker Netzwerk
+POSTGRES_USER=<USER>                # PostgresDB User
+POSTGRES_PASS=<PASSWORD>            # PostgresDB Passwort. Klartext
+POSTGRES_HOSTNAME=parkli-postgres   # PostgresDB Hostname
+
+#Dashbaord
+DASHBOARD_PORT=80

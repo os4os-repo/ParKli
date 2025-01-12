@@ -1,0 +1,34 @@
+# NodeRed Schnittstellen
+NODERED_IMAGE=nodered/node-red:latest             # NodeRed Image auf DockerHub
+NODERED_HOSTNAME=nodered                          # Hostname von NodeRed im Docker Netzwerk
+NODERED_PORT=1893                                 # Public Port
+NODERED_PAGETITLE=Demo                            # Tab Title of the Editor
+NODERED_HEADERTITLE=Demo                          # Editor Title 
+OS4OS_DIR=/data                                   # Host-Dir to persist Data
+NODERED_USER=                                     # NodeRed Editor User
+NODERED_PASSWORD=				  				  # NodeRed Editor Password Hash. $ has to be escaped with $
+NODERED_LOGLEVEL=info
+NODERED_PROJECTS=false
+NODERED_USERDIR=/data                             # Host-Dir to persist Data
+NODERED_METRICS=false
+NODERED_AUDIT=false
+NODERED_CREDKEY=false                             # not used
+
+# INFLUX Datenbank
+INFLUXDB_IMAGE=influxdb:latest
+INFLUXDB_HOSTNAME=influx
+INFLUXDB_PORT=8087                                # Public Port
+INFLUXDB_MODE=setup
+INFLUXDB_USERNAME=                                # Influx User
+INFLUXDB_PASSWORD=                                # Influx Password
+INFLUXDB_ORG=                                     # Influx Org
+INFLUXDB_BUCKET=mybucket
+INFLUXDB_ADMIN_TOKEN=                             # AdminToken
+
+#GRAFANA Visualisierung
+GRAFANA_IMAGE=grafana/grafana-oss:8.3.3
+GRAFANA_HOSTNAME=grafana
+GRAFANA_ADMIN_USER=                               # User
+GRAFANA_ADMIN_PASSWORD=                           # Password
+GRAFANA_ALLOW_SIGN_UP=false                       # Disable sign up function for new users
+GRAFANA_PORT=3001                                 # Public Port

@@ -1,0 +1,22 @@
+version: "3.3"
+
+networks:
+  parkli-net:
+    name: dashboard-net
+    driver: bridge
+
+services:
+  parkli-dbupdate-job:
+    container_name: parkli-dbupdate-job
+    image: parkli-dbupdate/v3
+    restart: on-failure
+    volumes:
+    - ./host-volumes/update:/update
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASS}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DBNAME}
+      POSTGRES_HOSTNAME: ${POSTGRES_HOSTNAME}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+    networks:
+    - dashboard-net
