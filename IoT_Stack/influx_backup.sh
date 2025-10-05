@@ -36,7 +36,7 @@ fi
 zip -r -P "$ZIP_PASSWORD" "$ZIP_PATH/$ZIP_NAME" "$HOSTVOL_DIR/$BACKUP_NAME"
 if [ $? -eq 0 ]; then
     echo "Backup erfolgreich verschlüsselt: $ZIP_NAME"
-    # Optional: unverschlüsseltes Backup löschen
+    # unverschlüsseltes Backup löschen
     rm -rf "$HOSTVOL_DIR/$BACKUP_NAME"
 else
     echo "Fehler beim Erstellen der verschlüsselten ZIP!"
