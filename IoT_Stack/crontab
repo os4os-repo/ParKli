@@ -1,0 +1,2 @@
+# Nächtlich das Backup ausführen und Log schreiben
+0 2 * * * /usr/local/bin/influx_backup.sh >> /var/log/influx_backup.log 2>&1
