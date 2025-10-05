@@ -65,6 +65,7 @@ services:
       - "${INFLUXDB_PORT}:8086"
     volumes:
       - ./data/influxdb:/var/lib/influxdb
+      - ./backups:/mnt/backups
 
   #######################################
   # Grafana
@@ -88,3 +89,4 @@ services:
       - "${GRAFANA_PORT}:3000"
     volumes:
       - ./data/grafana:/var/lib/grafana
+
