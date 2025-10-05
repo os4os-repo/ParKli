@@ -17,6 +17,10 @@ Basic settings for Node-RED are contained in a configuration file called setting
 
 The stack contains a container with an InfluxDB database for storing the measured values. InfluxDB is a time series database optimised to manage measured values with a temporal reference. InfluxDB can be controlled via the command line or via a WebGUI. Reading and writing to/from InfluxDB can be done via a predefined function module (node) within Node-RED.
 
+## InfluxDB Backup
+
+It is possible to have the Influx database backed up automatically. To do this, the attached shell script must be executed nightly via root crontab. The script generates a dump of the entire database via the Influx DBMS and stores it in a host directory. The backup is zipped and encrypted from this host directory. In parallel a Log-File is written to /var/log. You have to adapt the settings in the shell script!
+
 ## Grafana
 
 In order to create graphics such as pie charts, gauges, xy charts,... Grafana is included in the stack. Grafana is a widely used visualisation tool that can be accessed by the user as a WebGUI and can integrate various databases (including InfluxDB). Grafana offers the possibility to create your own diagrams consisting of visualisation + data query via an editor. Knowledge of query languages such as SQL is not absolutely necessary. 
